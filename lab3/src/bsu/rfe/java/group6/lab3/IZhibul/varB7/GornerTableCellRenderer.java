@@ -12,13 +12,13 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 public class GornerTableCellRenderer implements TableCellRenderer {
-    private JPanel panel = new JPanel();
-    private JLabel label = new JLabel();
+    private final JPanel panel = new JPanel();
+    private final JLabel label = new JLabel();
     // Ищем ячейки, строковое представление которых совпадает с needle
 // (иголкой). Применяется аналогия поиска иголки в стоге сена, в роли
 // стога сена - таблица
     private String needle = null;
-    private DecimalFormat formatter =
+    private final DecimalFormat formatter =
             (DecimalFormat) NumberFormat.getInstance();
 
     public GornerTableCellRenderer() {
@@ -44,19 +44,25 @@ public class GornerTableCellRenderer implements TableCellRenderer {
     public Component getTableCellRendererComponent(JTable table,
                                                    Object value, boolean isSelected, boolean hasFocus, int row, int col) {
 // Преобразовать double в строку с помощью форматировщика
-        String formattedDouble = formatter.format(value);
+        if (col != 2) {
+            String formattedDouble = formatter.format(value);
 // Установить текст надписи равным строковому представлению числа
-        label.setText(formattedDouble);
-        if (col == 1 && needle != null && needle.equals(formattedDouble)) {
+            label.setText(formattedDouble);
+            if (col == 1 && needle != null && needle.equals(formattedDouble)) {
 // Номер столбца = 1 (т.е. второй столбец) + иголка не null
 // (значит что-то ищем) +
 // значение иголки совпадает со значением ячейки таблицы -
 // окрасить задний фон панели в красный цвет
-            panel.setBackground(Color.RED);
-        } else {
+                panel.setBackground(Color.RED);
+            } else {
 // Иначе - в обычный белый
+                panel.setBackground(Color.WHITE);
+            }
+        } else {
+            label.setText(Boolean.toString((boolean)value));
             panel.setBackground(Color.WHITE);
         }
+
         return panel;
     }
 

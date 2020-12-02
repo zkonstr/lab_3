@@ -29,8 +29,8 @@ public class GornerTableModel extends AbstractTableModel {
     }
 
     public int getColumnCount() {
-// В данной модели два столбца
-        return 2;
+// В данной модели два(ха уже 3) столбца
+        return 3;
     }
 
     public int getRowCount() {
@@ -42,25 +42,43 @@ public class GornerTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int col) {
         // Вычислить значение X как НАЧАЛО_ОТРЕЗКА + ШАГ*НОМЕР_СТРОКИ
         double x = from + step * row;
-        double[] result = new double[3];
         if (col == 0) {
             // Если запрашивается значение 1-го столбца, то это X
             return x;
-        } else if (col == 1) {
-            result[0] = 0.0;
+        } else {
+            double result = 0.0;
             for (int i = 0; i < coefficients.length; i++) {
-                result[0] += Math.pow(x, coefficients.length - 1 - i) * coefficients[i];
+                result += Math.pow(x, coefficients.length - 1 - i) * coefficients[i];
             }
-            return result[0];
-        } else if (col == 2) {
-            result[1] = 0.0;
-            int p = coefficients.length - 1;
-            for (int i = 0; i < coefficients.length; i++) {
-                result[1] += Math.pow(x, coefficients.length - 1 - i) * coefficients[p--];
+            if (col == 1) {
+                return result;
+            } else {
+                return checkSequences(result);
             }
-            return result[1];
-        } else
-            return result[2] = result[1] - result[0];
+        }
+    }
+
+    private boolean checkSequences(double result) {
+        String s = Double.toString(result);
+        int delimIndex = 0;
+        boolean ans = false;
+        if (s.charAt(0) != '.') {
+            for (int i = 1; i < s.length(); i++) {
+                if (s.charAt(i) == '.'){
+                    delimIndex = i;
+                    break;
+                }
+                if (s.codePointAt(i) == s.codePointAt(i - 1)+1){
+                    ans = true;
+                }
+            }
+        }
+        for (int i = delimIndex + 1; i < s.length(); i++){
+            if (s.codePointAt(i) == s.codePointAt(i - 1)+1){
+                ans = true;
+            }
+        }
+        return ans;
     }
 
     public String getColumnName(int col) {
@@ -68,10 +86,13 @@ public class GornerTableModel extends AbstractTableModel {
             case 0:
 // Название 1-го столбца
                 return "Значение X";
-            default:
+            case 1:
 // Название 2-го столбца
                 return "Значение многочлена";
+            default:
+                return "Последовательный ряд?";
         }
+
     }
 
     public Class<?> getColumnClass(int col) {

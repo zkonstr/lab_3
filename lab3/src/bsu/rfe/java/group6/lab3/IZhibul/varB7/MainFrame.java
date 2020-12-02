@@ -34,23 +34,24 @@ public class MainFrame extends JFrame {
     private static final int WIDTH = 700;
     private static final int HEIGHT = 500;
     // Массив коэффициентов многочлена
-    private Double[] coefficients;
+    private final Double[] coefficients;
     // Объект диалогового окна для выбора файлов
 // Компонент не создаѐтся изначально, т.к. может и не понадобиться
 // пользователю если тот не собирается сохранять данные в файл
     private JFileChooser fileChooser = null;
     // Элементы меню вынесены в поля данных класса, так как ими необходимо
 // манипулировать из разных мест
-    private JMenuItem saveToTextMenuItem;
-    private JMenuItem saveToGraphicsMenuItem;
-    private JMenuItem searchValueMenuItem;
+    private final JMenuItem saveToTextMenuItem;
+    private final JMenuItem saveToGraphicsMenuItem;
+    private final JMenuItem searchValueMenuItem;
+    private final JMenuItem about;
     // Поля ввода для считывания значений переменных
-    private JTextField textFieldFrom;
-    private JTextField textFieldTo;
-    private JTextField textFieldStep;
-    private Box hBoxResult;
+    private final JTextField textFieldFrom;
+    private final JTextField textFieldTo;
+    private final JTextField textFieldStep;
+    private final Box hBoxResult;
     // Визуализатор ячеек таблицы
-    private GornerTableCellRenderer renderer = new
+    private final GornerTableCellRenderer renderer = new
             GornerTableCellRenderer();
     // Модель данных с результатами вычислений
     private GornerTableModel data;
@@ -78,6 +79,9 @@ public class MainFrame extends JFrame {
         JMenu tableMenu = new JMenu("Таблица");
 // Добавить его в главное меню
         menuBar.add(tableMenu);
+
+        JMenu helpMenu = new JMenu("Справка");
+        menuBar.add(helpMenu);
 // Создать новое "действие" по сохранению в текстовый файл
         Action saveToTextAction = new AbstractAction("Сохранить в текстовый файл") {
             public void actionPerformed(ActionEvent event) {
@@ -120,6 +124,15 @@ public class MainFrame extends JFrame {
                 }
             }
         };
+// Adding "About" & "Help" to Menu
+        about = new JMenuItem(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Автор программы: Жибуль Константин 6 группа");
+            }
+        });
+        about.setText("О программе...");
+        helpMenu.add(about);
 // Добавить соответствующий пункт подменю в меню "Файл"
         saveToGraphicsMenuItem = fileMenu.add(saveToGraphicsAction);
 // По умолчанию пункт меню является недоступным(данных ещѐ нет)
@@ -335,6 +348,8 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
+        System.out.println(Double.toString(1));
+
 // Если не задано ни одного аргумента командной строки -
 // Продолжать вычисления невозможно, коэффиценты неизвестны
         if (args.length == 0) {
