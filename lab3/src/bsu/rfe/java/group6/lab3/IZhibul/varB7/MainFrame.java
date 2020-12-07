@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -44,7 +45,6 @@ public class MainFrame extends JFrame {
     private final JMenuItem saveToTextMenuItem;
     private final JMenuItem saveToGraphicsMenuItem;
     private final JMenuItem searchValueMenuItem;
-    private final JMenuItem about;
     // Поля ввода для считывания значений переменных
     private final JTextField textFieldFrom;
     private final JTextField textFieldTo;
@@ -125,7 +125,7 @@ public class MainFrame extends JFrame {
             }
         };
 // Adding "About" & "Help" to Menu
-        about = new JMenuItem(new AbstractAction() {
+        JMenuItem about = new JMenuItem(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "Автор программы: Жибуль Константин 6 группа");

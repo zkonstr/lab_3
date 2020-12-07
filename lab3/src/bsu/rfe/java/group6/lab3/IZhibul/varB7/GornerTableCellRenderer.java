@@ -6,10 +6,13 @@ import java.awt.FlowLayout;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTable;
+import java.util.EventObject;
+import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 public class GornerTableCellRenderer implements TableCellRenderer {
     private final JPanel panel = new JPanel();
@@ -48,6 +51,10 @@ public class GornerTableCellRenderer implements TableCellRenderer {
             String formattedDouble = formatter.format(value);
 // Установить текст надписи равным строковому представлению числа
             label.setText(formattedDouble);
+            if (col == 1 && Math.signum((double)value) != Math.signum((double)table.getValueAt(row, 0))){
+                panel.setBackground(Color.MAGENTA);
+                //label.setText("Byaka");
+            } else
             if (col == 1 && needle != null && needle.equals(formattedDouble)) {
 // Номер столбца = 1 (т.е. второй столбец) + иголка не null
 // (значит что-то ищем) +
@@ -59,10 +66,9 @@ public class GornerTableCellRenderer implements TableCellRenderer {
                 panel.setBackground(Color.WHITE);
             }
         } else {
-            label.setText(Boolean.toString((boolean)value));
+            table.setValueAt(value, row, col);
             panel.setBackground(Color.WHITE);
         }
-
         return panel;
     }
 

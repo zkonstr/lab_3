@@ -1,13 +1,14 @@
 package bsu.rfe.java.group6.lab3.IZhibul.varB7;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellEditor;
 
 @SuppressWarnings("serial")
 public class GornerTableModel extends AbstractTableModel {
-    private Double[] coefficients;
-    private Double from;
-    private Double to;
-    private Double step;
+    private final Double[] coefficients;
+    private final Double from;
+    private final Double to;
+    private final Double step;
 
     public GornerTableModel(Double from, Double to, Double step, Double[] coefficients) {
         this.from = from;
@@ -59,25 +60,20 @@ public class GornerTableModel extends AbstractTableModel {
     }
 
     private boolean checkSequences(double result) {
+        //  result = 73.8;
         String s = Double.toString(result);
-        int delimIndex = 0;
         boolean ans = false;
-        if (s.charAt(0) != '.') {
-            for (int i = 1; i < s.length(); i++) {
-                if (s.charAt(i) == '.'){
-                    delimIndex = i;
+        for (int i = 2; i < s.length(); i++) {
+            boolean localAns = true;
+            for (int j = i - 1; j <= i; j++) {
+                if (!(s.codePointAt(j) == s.codePointAt(j - 1) + 1)) {
+                    localAns = false;
                     break;
                 }
-                if (s.codePointAt(i) == s.codePointAt(i - 1)+1){
-                    ans = true;
-                }
             }
+            ans |= localAns;
         }
-        for (int i = delimIndex + 1; i < s.length(); i++){
-            if (s.codePointAt(i) == s.codePointAt(i - 1)+1){
-                ans = true;
-            }
-        }
+
         return ans;
     }
 
@@ -95,7 +91,12 @@ public class GornerTableModel extends AbstractTableModel {
 
     }
 
+
     public Class<?> getColumnClass(int col) {
+        if (col == 2){
+            return Boolean.class;
+        }
+
 // И в 1-ом и во 2-ом столбце находятся значения типа Double
         return Double.class;
     }
