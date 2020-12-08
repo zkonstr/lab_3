@@ -60,7 +60,7 @@ public class GornerTableModel extends AbstractTableModel {
     }
 
     private boolean checkSequences(double result) {
-        String s = Double.toString(result);
+        String s = String.format("%.5g%n", result);
         boolean ans = false;
         for (int i = 2; i < s.length(); i++) {
             boolean localAns = true;
