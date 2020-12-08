@@ -1,5 +1,5 @@
 package bsu.rfe.java.group6.lab3.IZhibul.varB7;
-
+// for good test //123 123
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -53,7 +53,6 @@ public class GornerTableCellRenderer implements TableCellRenderer {
             label.setText(formattedDouble);
             if (col == 1 && Math.signum((double)value) != Math.signum((double)table.getValueAt(row, 0))){
                 panel.setBackground(Color.MAGENTA);
-                //label.setText("Byaka");
             } else
             if (col == 1 && needle != null && needle.equals(formattedDouble)) {
 // Номер столбца = 1 (т.е. второй столбец) + иголка не null
