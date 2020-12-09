@@ -53,15 +53,9 @@ public class GornerTableCellRenderer implements TableCellRenderer {
             label.setText(formattedDouble);
             if (col == 1 && Math.signum((double)value) != Math.signum((double)table.getValueAt(row, 0))){
                 panel.setBackground(Color.MAGENTA);
-                if (col == 1 && needle != null && needle.equals(formattedDouble)) {
-                    panel.setBackground(Color.RED);
-                }
             } else
-            if (col == 1 && needle != null && needle.equals(formattedDouble)) {
-// Номер столбца = 1 (т.е. второй столбец) + иголка не null
-// (значит что-то ищем) +
-// значение иголки совпадает со значением ячейки таблицы -
-// окрасить задний фон панели в красный цвет
+            if (col == 0 && needle != null && needle.equals(formattedDouble)) {
+
                 panel.setBackground(Color.RED);
             } else {
 // Иначе - в обычный белый

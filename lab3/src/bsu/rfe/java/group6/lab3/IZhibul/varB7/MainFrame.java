@@ -138,7 +138,7 @@ public class MainFrame extends JFrame {
 // По умолчанию пункт меню является недоступным(данных ещѐ нет)
         saveToGraphicsMenuItem.setEnabled(false);
 // Создать новое действие по поиску значений многочлена
-        Action searchValueAction = new AbstractAction("Найти значение многочлена") {
+        Action searchValueAction = new AbstractAction("Найти значение переменной") {
             public void actionPerformed(ActionEvent event) {
 // Запросить пользователя ввести искомую строку
                 String value =
